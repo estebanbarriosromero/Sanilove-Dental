@@ -23,4 +23,6 @@ El alta requiere DNI completo (8 cifras y letra de control válida). La letra se
 
 Las citas y packs heredados de la demostración aún usan el almacenamiento local del navegador; las cuentas y afiliaciones anteriores no se migran automáticamente.
 
-Para desarrollo local, configura las mismas variables en `.env` y ejecuta `npx vercel dev`. `npm run dev` sólo ofrece una previsualización estática y no ejecuta las rutas `/api/*`.
+No abras `index.html` con doble clic (`file://`) para iniciar sesión: esa forma de abrirlo no puede acceder a `/api/*`. Para desarrollo local, configura las variables en `.env` y ejecuta `npm run dev`; el script inicia Vercel Functions mediante `vercel dev`. En producción, usa la URL `https://...vercel.app`.
+
+Si Vercel devuelve un error de conexión, revisa que `DATABASE_URL`, `SESSION_SECRET` (32+ caracteres) y `ADMIN_PASSWORD` (12+ caracteres) estén añadidas a los entornos correctos del proyecto y vuelve a desplegar.
