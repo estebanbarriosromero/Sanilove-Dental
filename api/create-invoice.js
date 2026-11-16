@@ -1,5 +1,3 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder");
-
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -16,6 +14,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
     const customer = await stripe.customers.create({
       email: email || "cliente@sanilove.dental.org",
       name: customerName || "Cliente Sanilove",
