@@ -3,6 +3,7 @@ const {
   database,
   requireUser,
   validPolicyNumber,
+  isConfigError,
   sendError
 } = require("../_lib");
 
@@ -49,6 +50,10 @@ module.exports = async function handler(req, res) {
     return sendError(res, 405, "Método no permitido.");
   } catch (error) {
     console.error("Policy administration failed:", error.message);
-    return sendError(res, 500, "No se pudo actualizar el registro de pólizas.");
+    return sendError(
+      res,
+      isConfigError(error) ? 503 : 500,
+      isConfigError(error) ? error.message : "No se pudo actualizar el registro de pólizas."
+    );
   }
 };

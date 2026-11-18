@@ -3,6 +3,7 @@ const {
   database,
   requireUser,
   validPolicyNumber,
+  isConfigError,
   sendError
 } = require("../_lib");
 
@@ -37,7 +38,7 @@ module.exports = async function handler(req, res) {
       await query`INSERT INTO affiliations (dni, policy_number, insurer_id)
         VALUES (${user.dni}, ${policyNumber.trim()}, ${insurerId})
         ON CONFLICT (dni) DO UPDATE SET policy_number = EXCLUDED.policy_number,
-          insurer_id = EXCLUDED.insurer_id, created_at = NOW()`;
+          insurer_id = EXCLUDED.insurer_id, created_at = CURRENT_TIMESTAMP`;
       return res.status(200).json({
         affiliation: {
           pol: policyNumber.trim(),
@@ -56,6 +57,10 @@ module.exports = async function handler(req, res) {
     return sendError(res, 405, "Método no permitido.");
   } catch (error) {
     console.error("Affiliation request failed:", error.message);
-    return sendError(res, 500, "No se pudo guardar la afiliación.");
+    return sendError(
+      res,
+      isConfigError(error) ? 503 : 500,
+      isConfigError(error) ? error.message : "No se pudo guardar la afiliación."
+    );
   }
 };

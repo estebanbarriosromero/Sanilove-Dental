@@ -3,6 +3,7 @@ const {
   database,
   requireUser,
   validPolicyNumber,
+  isConfigError,
   sendError
 } = require("../_lib");
 
@@ -26,6 +27,10 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ valid: true, isDemo: rows[0].is_demo });
   } catch (error) {
     console.error("Policy verification failed:", error.message);
-    return sendError(res, 500, "No se pudo verificar la póliza.");
+    return sendError(
+      res,
+      isConfigError(error) ? 503 : 500,
+      isConfigError(error) ? error.message : "No se pudo verificar la póliza."
+    );
   }
 };

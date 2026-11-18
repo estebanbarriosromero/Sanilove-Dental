@@ -2,6 +2,7 @@ const {
   bootstrapAdmin,
   database,
   requireUser,
+  isConfigError,
   sendError
 } = require("../_lib");
 
@@ -17,6 +18,10 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ accounts });
   } catch (error) {
     console.error("Account listing failed:", error.message);
-    return sendError(res, 500, "No se pudieron cargar las cuentas.");
+    return sendError(
+      res,
+      isConfigError(error) ? 503 : 500,
+      isConfigError(error) ? error.message : "No se pudieron cargar las cuentas."
+    );
   }
 };

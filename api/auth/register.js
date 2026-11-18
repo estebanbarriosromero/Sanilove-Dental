@@ -40,7 +40,12 @@ module.exports = async function handler(req, res) {
     res.setHeader("Set-Cookie", authCookie(token, req, 60 * 60 * 24 * 7));
     return res.status(201).json({ user });
   } catch (error) {
-    if (error.code === "23505") return sendError(res, 409, "Ya existe una cuenta con ese DNI.");
+    if (
+      ["23505", "SQLITE_CONSTRAINT_PRIMARYKEY", "SQLITE_CONSTRAINT_UNIQUE"].includes(error.code) ||
+      (error.code === "SQLITE_CONSTRAINT" && /UNIQUE constraint failed: accounts\.dni/.test(error.message))
+    ) {
+      return sendError(res, 409, "Ya existe una cuenta con ese DNI.");
+    }
     console.error("Register failed:", error.message);
     return sendError(
       res,

@@ -78,8 +78,10 @@ async function handleRequest(req, res) {
       console.error("Local API error:", error.message);
       if (!res.writableEnded) {
         jsonResponse(res);
-        res.statusCode = error.message.includes("1 MB") || error.message.includes("valid JSON") ? 400 : 500;
-        res.json({ error: error.message.includes("DATABASE_URL") ? error.message : "Internal server error." });
+        const configError = /TURSO_DATABASE_URL|TURSO_AUTH_TOKEN|SESSION_SECRET|ADMIN_PASSWORD/.test(error.message);
+        const invalidRequest = error.message.includes("1 MB") || error.message.includes("valid JSON");
+        res.statusCode = invalidRequest ? 400 : configError ? 503 : 500;
+        res.json({ error: configError ? error.message : "Internal server error." });
       }
     }
     return;
