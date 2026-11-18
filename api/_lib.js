@@ -1,4 +1,4 @@
-const { createClient } = require("@libsql/client");
+const { neon } = require("@neondatabase/serverless");
 const bcrypt = require("bcryptjs");
 
 const ADMIN_DNI = (process.env.ADMIN_DNI || "50259682").replace(/\D/g, "");
@@ -7,25 +7,11 @@ let sql;
 let schemaReady;
 
 function database() {
-  const url = process.env.TURSO_DATABASE_URL;
-  const authToken = process.env.TURSO_AUTH_TOKEN;
-  if (!url) {
-    throw new Error("TURSO_DATABASE_URL no está configurada.");
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL no está configurada.");
   }
-  if (/^(libsql|https?):/.test(url) && !authToken) {
-    throw new Error("TURSO_AUTH_TOKEN no está configurado.");
-  }
-  if (!sql) {
-    sql = createClient({ url, ...(authToken ? { authToken } : {}) });
-  }
-  return async (strings, ...values) => {
-    let statement = strings[0];
-    for (let index = 0; index < values.length; index += 1) {
-      statement += `?${strings[index + 1]}`;
-    }
-    const result = await sql.execute({ sql: statement, args: values });
-    return result.rows;
-  };
+  if (!sql) sql = neon(process.env.DATABASE_URL);
+  return sql;
 }
 
 async function ensureSchema() {
@@ -38,21 +24,21 @@ async function ensureSchema() {
       email TEXT NOT NULL,
       password_hash TEXT NOT NULL,
       role TEXT NOT NULL DEFAULT 'cliente' CHECK (role IN ('admin', 'cliente')),
-      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )`;
     await query`CREATE TABLE IF NOT EXISTS policies (
       policy_number VARCHAR(8) NOT NULL,
       insurer_id TEXT NOT NULL,
       active BOOLEAN NOT NULL DEFAULT TRUE,
       is_demo BOOLEAN NOT NULL DEFAULT FALSE,
-      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       PRIMARY KEY (policy_number, insurer_id)
     )`;
     await query`CREATE TABLE IF NOT EXISTS affiliations (
       dni VARCHAR(8) PRIMARY KEY REFERENCES accounts(dni) ON DELETE CASCADE,
       policy_number VARCHAR(8) NOT NULL,
       insurer_id TEXT NOT NULL,
-      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       FOREIGN KEY (policy_number, insurer_id)
         REFERENCES policies(policy_number, insurer_id)
     )`;
@@ -67,11 +53,8 @@ async function ensureSchema() {
 }
 
 async function bootstrapAdmin() {
-  if (!process.env.TURSO_DATABASE_URL) {
-    throw new Error("Falta TURSO_DATABASE_URL: configura la URL de tu base de datos Turso.");
-  }
-  if (/^(libsql|https?):/.test(process.env.TURSO_DATABASE_URL) && !process.env.TURSO_AUTH_TOKEN) {
-    throw new Error("Falta TURSO_AUTH_TOKEN: configura el token de tu base de datos Turso.");
+  if (!process.env.DATABASE_URL) {
+    throw new Error("Falta DATABASE_URL: conecta una base de datos Neon en las variables de Vercel.");
   }
   if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error("SESSION_SECRET falta o tiene menos de 32 caracteres.");
@@ -124,7 +107,7 @@ function sendError(res, status, message) {
 }
 
 function isConfigError(error) {
-  return /TURSO_DATABASE_URL|TURSO_AUTH_TOKEN|SESSION_SECRET|ADMIN_PASSWORD/.test(error.message || "");
+  return /DATABASE_URL|SESSION_SECRET|ADMIN_PASSWORD/.test(error.message || "");
 }
 
 function authCookie(token, req, maxAge) {

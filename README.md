@@ -1,14 +1,13 @@
 # Sanilove Dental
 
-Sitio desplegable en Vercel con funciones serverless y base de datos gestionada Turso (libSQL) para cuentas, sesiones y afiliaciones.
+Sitio desplegable en Vercel con funciones serverless y PostgreSQL gestionado en Neon para cuentas, sesiones y afiliaciones.
 
 ## Configuración en Vercel
 
-1. Crea una base de datos en [Turso](https://turso.tech/) y obtén su URL y un token de autenticación.
+1. Crea una base de datos PostgreSQL en Neon y copia su connection string.
 2. Despliega este directorio como raíz del proyecto. Vercel sirve `index.html` y publica automáticamente las funciones de `api/`.
 3. En **Settings → Environment Variables**, configura:
-   - `TURSO_DATABASE_URL`: URL de la base de datos Turso.
-   - `TURSO_AUTH_TOKEN`: token de autenticación Turso.
+   - `DATABASE_URL`: connection string de Neon.
    - `SESSION_SECRET`: cadena aleatoria de al menos 32 caracteres. Puedes generarla con `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
    - `ADMIN_DNI`: `50259682`.
    - `ADMIN_PASSWORD`: contraseña privada de al menos 12 caracteres para la cuenta administradora.
@@ -24,6 +23,6 @@ El alta requiere DNI completo (8 cifras y letra de control válida). La letra se
 
 Las citas y packs heredados de la demostración aún usan el almacenamiento local del navegador; las cuentas y afiliaciones anteriores no se migran automáticamente.
 
-No abras `index.html` con doble clic (`file://`) para iniciar sesión: esa forma de abrirlo no puede acceder a `/api/*`. Para desarrollo local, desde la raíz del repositorio ejecuta `npm ci`, copia `.env.example` a `.env` y completa las variables necesarias; después ejecuta `npm run dev`. El servidor local expone la página y despacha las mismas funciones de `api/`. En producción, configura las mismas variables en Vercel; las funciones serverless conectan con Turso sin que tengas que mantener un servidor propio.
+No abras `index.html` con doble clic (`file://`) para iniciar sesión: esa forma de abrirlo no puede acceder a `/api/*`. Para desarrollo local, desde la raíz del repositorio ejecuta `npm ci`, copia `.env.example` a `.env` y completa las variables necesarias; después ejecuta `npm run dev`. El servidor local expone la página y despacha las mismas funciones de `api/`. En producción, configura las mismas variables en Vercel; las funciones serverless conectan con Neon sin que tengas que mantener un servidor propio.
 
-Para evitar errores de conexión, revisa que `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `SESSION_SECRET` (32+ caracteres) y `ADMIN_PASSWORD` (12+ caracteres) estén configuradas en Vercel y vuelve a desplegar.
+Para evitar errores de conexión, revisa que `DATABASE_URL`, `SESSION_SECRET` (32+ caracteres) y `ADMIN_PASSWORD` (12+ caracteres) estén configuradas en Vercel y vuelve a desplegar.

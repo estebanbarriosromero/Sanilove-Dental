@@ -6,7 +6,7 @@
     "dev": "node scripts/dev-server.js"
   },
   "dependencies": {
-    "@libsql/client": "^0.18.0",
+    "@neondatabase/serverless": "^1.2.1",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "jose": "^6.0.11",
