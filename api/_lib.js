@@ -5,6 +5,7 @@ const ADMIN_DNI = (process.env.ADMIN_DNI || "50259682").replace(/\D/g, "");
 const POLICY_NUMBER = /^\d{8}$/;
 let sql;
 let schemaReady;
+let adminReady;
 
 function database() {
   if (!process.env.DATABASE_URL) {
@@ -62,24 +63,34 @@ async function bootstrapAdmin() {
   if (!process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD.length < 12) {
     throw new Error("ADMIN_PASSWORD falta o tiene menos de 12 caracteres.");
   }
-  await ensureSchema();
-  const query = database();
-  const existing = await query`SELECT role FROM accounts WHERE dni = ${ADMIN_DNI}`;
-  if (existing[0]?.role === "admin") return;
-  const passwordHash = await bcrypt.hash(process.env.ADMIN_PASSWORD, 12);
-  await query`INSERT INTO accounts (dni, name, email, password_hash, role)
-    VALUES (
-      ${ADMIN_DNI},
-      'Administrador Sanilove',
-      ${process.env.ADMIN_EMAIL || "admin@sanilove.dental.org"},
-      ${passwordHash},
-      'admin'
-    )
-    ON CONFLICT (dni) DO UPDATE SET
-      name = EXCLUDED.name,
-      email = EXCLUDED.email,
-      password_hash = EXCLUDED.password_hash,
-      role = 'admin'`;
+  if (adminReady) return adminReady;
+  adminReady = (async () => {
+    await ensureSchema();
+    const query = database();
+    const existing = await query`SELECT role, password_hash FROM accounts WHERE dni = ${ADMIN_DNI}`;
+    if (
+      existing[0]?.role === "admin" &&
+      await bcrypt.compare(process.env.ADMIN_PASSWORD, existing[0].password_hash)
+    ) return;
+    const passwordHash = await bcrypt.hash(process.env.ADMIN_PASSWORD, 12);
+    await query`INSERT INTO accounts (dni, name, email, password_hash, role)
+      VALUES (
+        ${ADMIN_DNI},
+        'Administrador Sanilove',
+        ${process.env.ADMIN_EMAIL || "admin@sanilove.dental.org"},
+        ${passwordHash},
+        'admin'
+      )
+      ON CONFLICT (dni) DO UPDATE SET
+        name = EXCLUDED.name,
+        email = EXCLUDED.email,
+        password_hash = EXCLUDED.password_hash,
+        role = 'admin'`;
+  })().catch((error) => {
+    adminReady = null;
+    throw error;
+  });
+  return adminReady;
 }
 
 function normalizeDni(value) {
