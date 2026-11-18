@@ -4,7 +4,10 @@ const path = require("node:path");
 const dotenv = require("dotenv");
 
 const root = path.resolve(__dirname, "..");
-dotenv.config({ path: path.join(root, ".env") });
+const envFile = [".env.development.local", ".env"]
+  .map((file) => path.join(root, file))
+  .find((file) => fs.existsSync(file));
+if (envFile) dotenv.config({ path: envFile });
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
