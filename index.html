@@ -56,6 +56,68 @@ nav{align-items:center}.dd>a{display:block}.login .f input,.login .f select{back
 @media(max-width:760px){.dd,.dd .dm{display:contents}.dd>a{display:none}.dd .dm{position:static;opacity:1;visibility:visible;transform:none}nav{order:5;width:100%;margin:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}header{gap:.5rem}.ft{grid-template-columns:1fr 1fr}.hero,.login{grid-template-columns:1fr}.hv{min-height:280px}}
 @media(max-width:480px){.accessibility-dialog .settings{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:root{--sh:0 14px 38px rgba(11,47,107,.09)}
+body{background:linear-gradient(180deg,#fff 0%,#fbfcff 52%,#fff 100%)}
+header{padding:.85rem clamp(1rem,4vw,3rem);border-bottom:1px solid #e8eef8;box-shadow:0 8px 26px rgba(11,47,107,.04)}
+nav{gap:.2rem}
+nav a{padding:.5rem .9rem}
+nav a.on,nav a:hover{background:#edf4fd}
+main{max-width:1160px;padding:2rem clamp(1rem,4vw,2.5rem) 4rem}
+h1,h2,h3{letter-spacing:-.025em}
+h1{font-size:clamp(2.35rem,5.6vw,4.25rem)}
+h2{font-size:clamp(1.65rem,3vw,2.15rem)}
+.sec{margin-top:4.25rem}
+.hero{min-height:470px;padding:clamp(2.5rem,6vw,5rem) 0;gap:clamp(1.5rem,5vw,4rem)}
+.hero p{font-size:clamp(1.05rem,1.8vw,1.2rem);line-height:1.75}
+.hero .row{gap:.8rem;margin-top:1.35rem}
+.hv{min-height:380px}
+.grid{gap:1.4rem}
+.card{border-radius:26px;padding:clamp(1.25rem,2.4vw,1.8rem);box-shadow:var(--sh)}
+.card.s{background:#f4f8fe}
+.card>.ico{background:linear-gradient(135deg,#e9f3ff,#fff0f2);color:var(--navy)}
+.sol{gap:1rem;height:450px}
+.pn{border-radius:28px;box-shadow:0 16px 38px rgba(11,47,107,.13)}
+.pn::before{background:linear-gradient(180deg,#0b2f6b08 10%,#0b2f6bcc 100%)}
+.pn h3{letter-spacing:.08em;text-transform:uppercase;text-wrap:pretty}
+.pn.on h3{font-size:clamp(1.4rem,2.3vw,1.8rem)}
+.pn>div{padding:clamp(1.2rem,2.5vw,1.8rem)}
+.pn .pill{border:0;box-shadow:none}
+.pn:focus-visible{outline:3px solid var(--navy);outline-offset:4px}
+button,.btn{border:0;border-radius:999px;padding:.78rem 1.35rem;box-shadow:none;font-weight:800;letter-spacing:.01em;transition:transform .18s ease,background-color .18s ease,box-shadow .18s ease}
+button:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(11,47,107,.14)}
+button.alt,.btn.alt{background:#edf4fd;color:var(--navy)}
+button.alt:hover,.btn.alt:hover{background:#e2eefc;box-shadow:none}
+button:active,.btn:active{transform:translateY(0)}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+:focus-visible{outline:3px solid var(--navy)!important;outline-offset:3px;box-shadow:0 0 0 2px #fff!important}
+.opt{border:0;border-radius:18px;background:#f1f6fc;padding:1.1rem 1.3rem}
+.opt:hover{background:#e7f0fc}
+.tc{border-radius:34px;padding:clamp(2.5rem,5vw,4rem) clamp(1.25rem,4vw,2.5rem)}
+.tc .opts button{border:0;background:#ffffff30}
+.modal>div{box-shadow:0 28px 80px rgba(11,47,107,.22)}
+.accessibility-dialog{padding:clamp(1.4rem,4vw,2.2rem)!important;border-radius:28px!important}
+.accessibility-dialog .settings{gap:1rem}
+.accessibility-dialog .settings label{margin:0;padding:1rem;border-radius:18px;background:#f4f8fe}
+.accessibility-dialog .settings select{margin-top:.45rem;background:#fff}
+.accessibility-dialog #readPageBtn[aria-pressed="true"]{background:var(--navy)}
+footer{border-top:1px solid #e7eef8;background:#f5f8fd}
+@media(max-width:760px){
+ main{padding-top:1.25rem}
+ .hero{min-height:0;padding:2.5rem 0 2rem;text-align:center}
+ .hero>div:first-child{max-width:42rem;margin:0 auto}
+ .hero .row{justify-content:center}
+ .hv{min-height:290px}
+ .sol{gap:.75rem}
+ .pn.on{min-height:340px}
+ .sec{margin-top:3.25rem}
+}
+@media(max-width:480px){
+ .hero{padding-top:2rem}
+ .hero h1{font-size:clamp(2.1rem,10vw,3rem)}
+ .hv{min-height:250px}
+ .hero .row>*{flex:1}
+ .accessibility-dialog .settings{gap:.5rem}
+}
 </style></head><body>
 <header><a class="logo" href="#inicio"><svg width="34" height="38" viewBox="0 0 100 112" aria-hidden="true"><defs><linearGradient id="g"><stop offset="0" stop-color="#8fc1fa"/><stop offset="1" stop-color="#ff6f7d"/></linearGradient></defs><path d="M50 22C40 8 8 8 8 38c0 18 18 32 42 36 24-4 42-18 42-36C92 8 60 8 50 22Z" fill="url(#g)"/><path d="M50 36c-6-8-22-6-22 8 0 10 10 18 22 21 12-3 22-11 22-21 0-14-16-16-22-8Z" fill="#fff"/><path d="M20 62c6 6 18 12 30 12s24-6 30-12c-2 20-6 30-14 38-4 4-8-2-10-14h-12c-2 12-6 18-10 14-8-8-10-18-14-38Z" fill="url(#g)"/></svg><span>Sani<b>love</b> <i>Dental</i></span></a>
 <nav id="nav"></nav><span class="row"><button class="alt sm" id="accessibility" type="button" onclick="openAccessibility()" aria-haspopup="dialog" aria-controls="accessibilityDialog" aria-label="Accesibilidad">Accesibilidad</button><a class="btn sm" href="#citas">Pedir cita</a><button class="alt sm" id="acc"></button></span></header>
@@ -141,11 +203,14 @@ const loadAccessibility=()=>{try{return JSON.parse(localStorage.getItem(ACCESSIB
 const accessibilityPrefs=loadAccessibility();
 let locale=["es","en","zh"].includes(accessibilityPrefs.locale)?accessibilityPrefs.locale:"es";
 let reading=false,fs=Math.min(130,Math.max(85,Number(accessibilityPrefs.fontSize)||100));
-let readFocusedButtons=accessibilityPrefs.readFocusedButtons===true,selectedVoiceURI=accessibilityPrefs.voiceURI||"",accessibilityTrigger=null;
+let readFocusedButtons=accessibilityPrefs.version===2?accessibilityPrefs.readFocusedButtons!==false:true,selectedVoiceURI=accessibilityPrefs.voiceURI||"",accessibilityTrigger=null,readerRun=0,pageReadQueue=null;
 const sourceTextNodes=new WeakMap(),lastTranslatedTextNodes=new WeakMap();
 const sourceAttributes=new WeakMap(),lastTranslatedAttributes=new WeakMap();
 const languageTags={es:"es-ES",en:"en-US",zh:"zh-CN"};
-const translationPhrases=Object.keys(window.SANILOVE_TRANSLATIONS||{}).filter(key=>/\s/.test(key)).sort((a,b)=>b.length-a.length);
+const translationPhrases=Object.keys(window.SANILOVE_TRANSLATIONS||{}).filter(key=>/\s/.test(key)&&key.trim().length>2).sort((a,b)=>b.length-a.length).map(key=>({
+ pattern:new RegExp("(^|[^\\p{L}\\p{N}])"+key.trim().replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?=$|[^\\p{L}\\p{N}])","giu"),
+ translations:window.SANILOVE_TRANSLATIONS[key]
+}));
 const translationWords=Object.keys(window.SANILOVE_TRANSLATIONS||{}).filter(key=>/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$/.test(key)).map(word=>({
  pattern:new RegExp("(^|[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9])"+word+"(?=$|[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9])","gi"),
  translations:window.SANILOVE_TRANSLATIONS[word]
@@ -155,8 +220,9 @@ function translateText(value,language=locale){
  const exact=translations[value];
  if(exact)return exact[language]||value;
  let translated=value;
- for(const phrase of translationPhrases){
-  if(translated.includes(phrase))translated=translated.split(phrase).join(translations[phrase][language]||phrase);
+ for(const entry of translationPhrases){
+  const replacement=entry.translations[language];
+  if(replacement)translated=translated.replace(entry.pattern,(match,boundary)=>boundary+replacement)
  }
  for(const entry of translationWords){
   const replacement=entry.translations[language];
@@ -194,6 +260,18 @@ function localizeAttributes(element){
   if(current!==translated)element.setAttribute(name,translated)
  }
 }
+function setLocalizedText(element,spanish){
+ const translated=translateText(spanish);
+ element.textContent=translated;
+ const node=element.firstChild;
+ if(node){sourceTextNodes.set(node,spanish);lastTranslatedTextNodes.set(node,translated)}
+}
+function setLocalizedAttribute(element,name,spanish){
+ let originals=sourceAttributes.get(element),previous=lastTranslatedAttributes.get(element);
+ if(!originals){originals={};previous={};sourceAttributes.set(element,originals);lastTranslatedAttributes.set(element,previous)}
+ const translated=translateText(spanish);
+ originals[name]=spanish;previous[name]=translated;element.setAttribute(name,translated)
+}
 function applyLocalization(root=document.body){
  if(!root)return;
  document.documentElement.lang=languageTags[locale];
@@ -216,19 +294,21 @@ const localizationObserver=new MutationObserver(records=>records.forEach(record=
 }));
 localizationObserver.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["aria-label","title","placeholder","alt"]});
 function saveAccessibility(){
- try{localStorage.setItem(ACCESSIBILITY_KEY,JSON.stringify({locale,fontSize:fs,readFocusedButtons,voiceURI:selectedVoiceURI}))}
+ try{localStorage.setItem(ACCESSIBILITY_KEY,JSON.stringify({version:2,locale,fontSize:fs,readFocusedButtons,voiceURI:selectedVoiceURI}))}
  catch(error){console.warn("Could not save accessibility preferences:",error)}
 }
 function setLanguage(language){
  if(!["es","en","zh"].includes(language))return;
+ const resumeReading=reading;
  if(window.speechSynthesis)speechSynthesis.cancel();
- if(reading)stopR();
+ readerRun++;
  locale=language;
  if(selectedVoiceURI&&!getVoicesForLanguage().some(voice=>voice.voiceURI===selectedVoiceURI))selectedVoiceURI="";
- if(readFocusedButtons&&!selectedVoice()){readFocusedButtons=false;const checkbox=$("#readFocusedButtons");if(checkbox)checkbox.checked=false}
  applyLocalization();
+ if(resumeReading){reading=true;updateReaderControl()}
  saveAccessibility();
- refreshVoiceOptions()
+ refreshVoiceOptions();
+ if(resumeReading)readPageContent()
 }
 const fz=d=>{fs=Math.min(130,Math.max(85,fs+d*10));document.documentElement.style.fontSize=fs+"%";const size=$("#fontSizeValue");if(size)size.textContent=fs+"%";saveAccessibility()};
 function getVoicesForLanguage(){
@@ -240,68 +320,95 @@ function getVoicesForLanguage(){
 }
 function selectedVoice(){
  const voices=getVoicesForLanguage();
- return voices.find(voice=>voice.voiceURI===selectedVoiceURI)||voices.find(voice=>voice.lang.toLowerCase()===languageTags[locale].toLowerCase())||voices[0]||null
+ return voices.find(voice=>voice.voiceURI===selectedVoiceURI)||voices.find(voice=>voice.default)||voices.find(voice=>voice.lang.toLowerCase()===languageTags[locale].toLowerCase())||voices[0]||null
 }
 function refreshVoiceOptions(){
  const select=$("#voiceChoice"),note=$("#voiceNote");
  if(!select)return;
  const voices=getVoicesForLanguage();
  select.replaceChildren();
- const automatic=document.createElement("option");automatic.value="";automatic.textContent=translateText("Usar voz predeterminada del dispositivo");select.append(automatic);
+ const automatic=document.createElement("option");automatic.value="";automatic.textContent=translateText("Voz automática (recomendada)");select.append(automatic);
  voices.forEach(voice=>{const option=document.createElement("option");option.value=voice.voiceURI;option.textContent=voice.name+" ("+voice.lang+")";select.append(option)});
  select.value=voices.some(voice=>voice.voiceURI===selectedVoiceURI)?selectedVoiceURI:"";
  select.disabled=!window.speechSynthesis;
- if(note)note.textContent=voices.length?translateText("Las voces disponibles dependen del dispositivo y del navegador."):translateText("No hay voces instaladas para este idioma. Instala una voz de este idioma en tu dispositivo para usar la lectura en voz alta.")
+ if(note)note.textContent=voices.length?translateText("Las voces disponibles dependen del dispositivo y del navegador."):translateText("No hay una voz instalada para este idioma. Se usará la voz predeterminada del dispositivo y puede sonar distinta.")
 }
-function changeVoice(uri){selectedVoiceURI=uri;saveAccessibility()}
+function changeVoice(uri){
+ const resumeReading=reading;
+ if(window.speechSynthesis)speechSynthesis.cancel();
+ readerRun++;selectedVoiceURI=uri;saveAccessibility();
+ if(resumeReading)readPageContent()
+}
 function setFocusedButtonReading(enabled){
- if(enabled&&!selectedVoice()){const checkbox=$("#readFocusedButtons");if(checkbox)checkbox.checked=false;toast(`<p>${esc(translateText("No hay voces instaladas para este idioma. Instala una voz de este idioma en tu dispositivo para usar la lectura en voz alta."))}</p>`);return}
  readFocusedButtons=enabled;saveAccessibility();if(!enabled&&!reading&&window.speechSynthesis)speechSynthesis.cancel()
 }
 function speak(text,onEnd=()=>{}){
  if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){toast("<p>Tu navegador no incluye lectura de voz. Instala una voz de este idioma en el dispositivo e inténtalo de nuevo.</p>");return false}
  const utterance=new SpeechSynthesisUtterance(text);
- const voice=selectedVoice();if(!voice){toast(`<p>${esc(translateText("No hay voces instaladas para este idioma. Instala una voz de este idioma en tu dispositivo para usar la lectura en voz alta."))}</p>`);return false}
- utterance.lang=voice.lang||languageTags[locale];utterance.voice=voice;utterance.rate=.95;
+ const voice=selectedVoice();utterance.lang=languageTags[locale];if(voice)utterance.voice=voice;utterance.rate=.95;
  utterance.onend=onEnd;
- utterance.onerror=event=>{if(reading)stopR();if(event.error!=="canceled"&&event.error!=="interrupted")toast("<p>No se pudo reproducir la voz seleccionada. Comprueba las voces instaladas en el dispositivo.</p>")};
+ utterance.onerror=event=>{if(event.error!=="canceled"&&event.error!=="interrupted"){stopR();toast("<p>No se pudo reproducir la voz seleccionada. Comprueba las voces instaladas en el dispositivo.</p>")}};
  speechSynthesis.speak(utterance);return true
 }
-function stopR(){
- reading=false;
+function updateReaderControl(){
  const button=$("#readPageBtn");
- if(button){button.textContent=translateText("Leer página en voz alta");button.setAttribute("aria-label",translateText("Leer la página en voz alta"))}
+ if(!button)return;
+ setLocalizedText(button,reading?"Parar lectura":"Leer página en voz alta");
+ setLocalizedAttribute(button,"aria-label",reading?"Parar lectura":"Leer la página en voz alta");
+ button.setAttribute("aria-pressed",String(reading))
+}
+function stopR(){
+ reading=false;readerRun++;pageReadQueue=null;
+ if(window.speechSynthesis)speechSynthesis.cancel();
+ updateReaderControl()
+}
+function readPageContent(){
+ if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){stopR();toast("<p>Tu navegador no incluye lector de voz.</p>");return}
+ const pageText=[$("#app")?.innerText,$("footer")?.innerText].filter(Boolean).join(" ").replace(/\s+/g," ").trim();
+ const parts=(pageText.match(/[^.!?。！？]+[.!?。！？]?/g)||[]).map(part=>part.trim()).filter(Boolean).slice(0,120);
+ if(!parts.length){stopR();return}
+ pageReadQueue={run:++readerRun,parts,index:0};
+ readNextPageChunk(pageReadQueue)
+}
+function readNextPageChunk(queue){
+ if(!reading||queue!==pageReadQueue||queue.run!==readerRun||queue.index>=queue.parts.length)return;
+ const run=queue.run;
+ speak(queue.parts[queue.index++],()=>{if(queue===pageReadQueue&&queue.run===run&&readerRun===run)readNextPageChunk(queue)})
 }
 function readPage(){
  if(!window.speechSynthesis){toast("<p>Tu navegador no incluye lector de voz.</p>");return}
- if(!selectedVoice()){toast(`<p>${esc(translateText("No hay voces instaladas para este idioma. Instala una voz de este idioma en tu dispositivo para usar la lectura en voz alta."))}</p>`);return}
- if(reading){speechSynthesis.cancel();stopR();return}
- const pageText=[$("#app")?.innerText,$("footer")?.innerText].filter(Boolean).join(" ").replace(/\s+/g," ").trim();
- const parts=(pageText.match(/[^.!?。！？]+[.!?。！？]?/g)||[]).map(part=>part.trim()).filter(Boolean).slice(0,120);
- if(!parts.length)return;
- reading=true;const button=$("#readPageBtn");
- if(button){button.textContent=translateText("Parar lectura");button.setAttribute("aria-label",translateText("Parar lectura"))}
- speechSynthesis.cancel();
- parts.forEach((part,index)=>speak(part,index===parts.length-1?stopR:()=>{}))
+ if(reading){stopR();return}
+ reading=true;updateReaderControl();readPageContent()
 }
 function openAccessibility(){
  clearTimeout(toastTimer);
  accessibilityTrigger=document.activeElement;
  const modal=$("#modal");
- modal.innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><div class="accessibility-dialog" id="accessibilityDialog" role="dialog" aria-modal="true" aria-labelledby="accessibilityTitle"><h2 id="accessibilityTitle">Accesibilidad</h2><div class="settings"><label>Idioma<select id="siteLanguage" onchange="setLanguage(this.value)"><option value="es">Español</option><option value="en">English</option><option value="zh">中文（简体）</option></select></label><label>Voz<select id="voiceChoice" onchange="changeVoice(this.value)"></select></label></div><p class="voice-note" id="voiceNote"></p><h3>Tamaño del texto</h3><div class="row"><button class="alt" type="button" onclick="fz(-1)" aria-label="Reducir el tamaño del texto">A−</button><button type="button" onclick="fz(1)" aria-label="Aumentar el tamaño del texto">A+</button><span id="fontSizeValue">${fs}%</span></div><p>El tamaño se puede ajustar entre 85 % y 130 %.</p><label><input id="readFocusedButtons" type="checkbox" ${readFocusedButtons?"checked":""} onchange="setFocusedButtonReading(this.checked)">Leer botones al enfocarlos</label><p><button id="readPageBtn" type="button" onclick="readPage()" aria-label="Leer la página en voz alta">Leer página en voz alta</button></p><button class="alt" type="button" onclick="closeModal()">Cerrar</button></div></div>`;
+ modal.innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><div class="accessibility-dialog" id="accessibilityDialog" role="dialog" aria-modal="true" aria-labelledby="accessibilityTitle" aria-describedby="accessibilityHelp"><h2 id="accessibilityTitle">Accesibilidad</h2><p id="accessibilityHelp">Elige el idioma y ajusta la lectura y el tamaño del texto.</p><div class="settings"><label>Idioma<select id="siteLanguage" aria-label="Idioma de la página" onchange="setLanguage(this.value)"><option value="es">Español</option><option value="en">English</option><option value="zh">中文（简体）</option></select></label><label>Voz<select id="voiceChoice" aria-label="Voz para la lectura" aria-describedby="voiceNote" onchange="changeVoice(this.value)"></select></label></div><p class="voice-note" id="voiceNote" aria-live="polite"></p><h3>Tamaño del texto</h3><div class="row"><button class="alt" type="button" onclick="fz(-1)" aria-label="Reducir el tamaño del texto">A−</button><button type="button" onclick="fz(1)" aria-label="Aumentar el tamaño del texto">A+</button><span id="fontSizeValue" aria-live="polite">${fs}%</span></div><p>El tamaño se puede ajustar entre 85 % y 130 %.</p><label><input id="readFocusedButtons" type="checkbox" ${readFocusedButtons?"checked":""} onchange="setFocusedButtonReading(this.checked)">Leer botones al enfocarlos</label><p id="readFocusedHelp">Al enfocar un botón o control se leerá su etiqueta. Pulsa «Parar lectura» para detener la voz.</p><p><button id="readPageBtn" type="button" onclick="readPage()" aria-label="Leer la página en voz alta" aria-pressed="${reading}" aria-live="polite">Leer página en voz alta</button></p><button class="alt" id="closeAccessibility" type="button" onclick="closeModal()">Cerrar</button></div></div>`;
  modal.querySelector("#siteLanguage").value=locale;
  applyLocalization(modal);refreshVoiceOptions();
- modal.querySelector("#fontSizeValue").textContent=fs+"%";
+ modal.querySelector("#fontSizeValue").textContent=fs+"%";updateReaderControl();
  modal.querySelector("#siteLanguage").focus()
 }
 function announceFocusedButton(event){
- const button=event.target.closest?.("button");
- if(!button||!readFocusedButtons||reading)return;
- const label=button.getAttribute("aria-label")||button.innerText||button.value;
- if(!label||!window.speechSynthesis||!selectedVoice())return;
- speechSynthesis.cancel();speak(label.trim())
+ const control=event.target.closest?.("button,a,input,select,textarea,summary,[role='button']");
+ if(!control||(!readFocusedButtons&&!reading)||control.id==="readPageBtn")return;
+ const controlLabel=control.getAttribute("aria-label")||control.labels?.[0]?.innerText||control.innerText||control.getAttribute("placeholder")||"";
+ const value=control.tagName==="SELECT"?control.selectedOptions[0]?.innerText:"";
+ const checked=/^(checkbox|radio)$/.test(control.type)?(control.checked?" · "+translateText("Seleccionado"):" · "+translateText("No seleccionado")):"";
+ const label=[controlLabel,value].filter(Boolean).join(" · ")+checked;
+ if(!label||!window.speechSynthesis)return;
+ const queue=pageReadQueue;
+ const run=++readerRun;if(queue)queue.run=run;
+ speechSynthesis.cancel();
+ speak(label.trim(),()=>{if(reading&&queue===pageReadQueue&&readerRun===run)readNextPageChunk(queue)})
 }
 document.addEventListener("focusin",announceFocusedButton);
+document.addEventListener("click",event=>{
+ if(!reading)return;
+ const control=event.target.closest?.("button,a,input,select,textarea,summary,[role='button']");
+ if(control&&!["readPageBtn","accessibility","closeAccessibility","siteLanguage","voiceChoice"].includes(control.id))stopR()
+},true);
 document.addEventListener("keydown",event=>{
  if(event.key==="Escape"&&$("#accessibilityDialog")){closeModal();return}
  const dialog=$("#accessibilityDialog");
@@ -453,5 +560,5 @@ const modif=id=>toast(`<h3>Modificar cita</h3><label>Nuevo día<input type="date
 const confirmC=id=>{const c=all.find(x=>x.id==id);if(!c)return;st.upd("citas",id,{estado:"Confirmada"});location.href=mailto(c.em,"Tu cita en Sanilove Dental",`Hola ${c.nom}, tu cita (${c.t}) queda confirmada el ${c.d} a las ${c.h} en ${c.c}.`)};
 const sendTest=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));location.href=mailto(CLINIC_EMAIL,"Test de necesidades – "+f.nom,`Interés: ${plan||TR[T.a[0]??0][1]}\nInicio: ${QS[1][1][T.a[1]]||""}\nPago: ${QS[2][1][T.a[2]]||""}\nContacto: ${f.nom}, ${f.em}, ${f.tel}`);return false};
 const sendHelp=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));location.href=mailto(CLINIC_EMAIL,"Atención al cliente – "+f.nom,f.m);return false};
-document.documentElement.style.fontSize=fs+"%";document.documentElement.lang=languageTags[locale];addEventListener("hashchange",()=>{if(reading){speechSynthesis.cancel();stopR()}render();scrollTo(0,0)});render();init();
+document.documentElement.style.fontSize=fs+"%";document.documentElement.lang=languageTags[locale];addEventListener("hashchange",()=>{render();scrollTo(0,0);if(reading)requestAnimationFrame(readPageContent)});render();init();
 </script></body></html>
