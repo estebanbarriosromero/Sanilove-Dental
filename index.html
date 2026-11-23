@@ -118,12 +118,24 @@ footer{border-top:1px solid #e7eef8;background:#f5f8fd}
  .hero .row>*{flex:1}
  .accessibility-dialog .settings{gap:.5rem}
 }
+.hero{position:relative;isolation:isolate}
+.hero::before{content:"";position:absolute;z-index:-1;inset:2% -2%;border-radius:40px;background:radial-gradient(circle at 82% 45%,rgba(255,111,125,.1),transparent 27%),radial-gradient(circle at 68% 68%,rgba(143,193,250,.16),transparent 34%);pointer-events:none}
+.stat{padding:1.2rem .8rem;border-radius:20px;background:rgba(244,248,254,.78)}
+@media(hover:hover) and (pointer:fine){
+ .card.hv2:hover,.card.team:hover{transform:translateY(-5px);box-shadow:0 20px 46px rgba(11,47,107,.13)}
+ .pn:hover .si{transform:scale(1.035)}
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .cursor-aura{position:fixed;z-index:100;top:0;left:0;width:42px;height:42px;border-radius:50%;background:radial-gradient(circle,rgba(255,111,125,.2) 0%,rgba(255,111,125,.1) 42%,rgba(255,111,125,0) 74%);filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .14s ease;will-change:transform,opacity}
+ .cursor-aura.is-visible{opacity:1}
+}
 </style></head><body>
 <header><a class="logo" href="#inicio"><svg width="34" height="38" viewBox="0 0 100 112" aria-hidden="true"><defs><linearGradient id="g"><stop offset="0" stop-color="#8fc1fa"/><stop offset="1" stop-color="#ff6f7d"/></linearGradient></defs><path d="M50 22C40 8 8 8 8 38c0 18 18 32 42 36 24-4 42-18 42-36C92 8 60 8 50 22Z" fill="url(#g)"/><path d="M50 36c-6-8-22-6-22 8 0 10 10 18 22 21 12-3 22-11 22-21 0-14-16-16-22-8Z" fill="#fff"/><path d="M20 62c6 6 18 12 30 12s24-6 30-12c-2 20-6 30-14 38-4 4-8-2-10-14h-12c-2 12-6 18-10 14-8-8-10-18-14-38Z" fill="url(#g)"/></svg><span>Sani<b>love</b> <i>Dental</i></span></a>
 <nav id="nav"></nav><span class="row"><button class="alt sm" id="accessibility" type="button" onclick="openAccessibility()" aria-haspopup="dialog" aria-controls="accessibilityDialog" aria-label="Accesibilidad">Accesibilidad</button><a class="btn sm" href="#citas">Pedir cita</a><button class="alt sm" id="acc"></button></span></header>
 <main id="app"></main>
 <footer><div class="ft"><div><h3>Sanilove Dental</h3><p>Cuidamos tu sonrisa con cariño, cercanía y transparencia.</p><a class="btn sm" href="#citas">Pedir cita</a></div><div><h3>La clínica</h3><a href="#tratamientos">Tratamientos</a><a href="#precios">Precios</a><a href="#seguros">Seguros y packs</a><a href="#clinicas">Clínicas</a></div><div><h3>Pacientes</h3><a href="#cuenta">Mi área personal</a><a href="#test">Test de necesidades</a><a href="#ayuda">Atención al cliente</a></div><div><h3>Recepción</h3><a id="mail" href="#"><b style="color:var(--navy)">recepcion@sanilove.dental.org</b></a><p>91 000 00 00</p><p>L–V 9:00–20:00</p></div><div class="cp">© 2026 Sanilove Dental. Todos los derechos reservados.</div></div></footer>
 <div id="modal"></div>
+<div id="cursorAura" class="cursor-aura" aria-hidden="true"></div>
 <script src="/locales.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <script>
@@ -500,6 +512,22 @@ function render(){const k=cur();const modal=$("#modal");if(modal)modal.innerHTML
  applyLocalization(document.body);clearInterval(tmr);clearInterval(stmr);if($("#sol")&&!matchMedia("(prefers-reduced-motion:reduce)").matches)stmr=setInterval(()=>{const s=$("#sol");if(s&&!s.matches(":hover")&&!s.contains(document.activeElement)){const p=[...s.children],i=p.findIndex(x=>x.classList.contains("on"));solOn(p[(i+1)%p.length])}},4500);if($("#tm"))tmr=setInterval(()=>{ti=(ti+1)%TS.length;$("#tm").innerHTML=tm();applyLocalization($("#tm"))},5500);
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");if(e.target.dataset.n)count(e.target);io.unobserve(e.target)}}),{threshold:.15});document.querySelectorAll(".rv,[data-n]").forEach(x=>io.observe(x));if($("#cuota"))fin()}
 function count(el){const n=+el.dataset.n,t0=performance.now(),f=t=>{const p=Math.min((t-t0)/1300,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3))).toLocaleString(locale==="zh"?"zh-CN":locale==="en"?"en-US":"es-ES")+el.dataset.s;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+function initCursorAura(){
+ const aura=$("#cursorAura"),pointerPreference=matchMedia("(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)");
+ if(!aura)return;
+ let frame=0,x=0,y=0;
+ const hide=()=>{aura.classList.remove("is-visible");if(frame){cancelAnimationFrame(frame);frame=0}};
+ const move=event=>{
+  if(!pointerPreference.matches||event.pointerType==="touch"){hide();return}
+  x=event.clientX;y=event.clientY;
+  if(frame)return;
+  frame=requestAnimationFrame(()=>{frame=0;aura.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;aura.classList.add("is-visible")})
+ };
+ document.addEventListener("pointermove",move,{passive:true});
+ document.documentElement.addEventListener("pointerleave",hide);
+ window.addEventListener("blur",hide);
+ pointerPreference.addEventListener("change",event=>{if(!event.matches)hide()})
+}
 const fin=()=>{const a=+$("#am").value,m=+$("#ms").value,t=a*(m==24?1.02:1);$("#amv").textContent=eur(a);$("#cuota").textContent=eur(t/m)+" al mes · "+m+" cuotas"};
 const calc=()=>{let t=[...document.querySelectorAll("#calc input:checked")].reduce((a,x)=>a+ +x.dataset.p,0);const s=aff&&SEG.find(x=>x.id==aff.insId);if(s)t*=1-s.dto;$("#tot").textContent=eur(t)};
 const pick=(i,j)=>{plan=TR[i][1]+" – "+TR[i][3][j][0];T={s:1,a:[i]};location.hash="test";if(cur()=="test")render()};
@@ -560,5 +588,5 @@ const modif=id=>toast(`<h3>Modificar cita</h3><label>Nuevo día<input type="date
 const confirmC=id=>{const c=all.find(x=>x.id==id);if(!c)return;st.upd("citas",id,{estado:"Confirmada"});location.href=mailto(c.em,"Tu cita en Sanilove Dental",`Hola ${c.nom}, tu cita (${c.t}) queda confirmada el ${c.d} a las ${c.h} en ${c.c}.`)};
 const sendTest=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));location.href=mailto(CLINIC_EMAIL,"Test de necesidades – "+f.nom,`Interés: ${plan||TR[T.a[0]??0][1]}\nInicio: ${QS[1][1][T.a[1]]||""}\nPago: ${QS[2][1][T.a[2]]||""}\nContacto: ${f.nom}, ${f.em}, ${f.tel}`);return false};
 const sendHelp=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));location.href=mailto(CLINIC_EMAIL,"Atención al cliente – "+f.nom,f.m);return false};
-document.documentElement.style.fontSize=fs+"%";document.documentElement.lang=languageTags[locale];addEventListener("hashchange",()=>{render();scrollTo(0,0);if(reading)requestAnimationFrame(readPageContent)});render();init();
+document.documentElement.style.fontSize=fs+"%";document.documentElement.lang=languageTags[locale];addEventListener("hashchange",()=>{render();scrollTo(0,0);if(reading)requestAnimationFrame(readPageContent)});render();init();initCursorAura();
 </script></body></html>
