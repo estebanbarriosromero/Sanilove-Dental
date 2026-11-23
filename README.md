@@ -23,6 +23,10 @@ El alta requiere DNI completo (8 cifras y letra de control válida). La letra se
 
 Las citas y packs heredados de la demostración aún usan el almacenamiento local del navegador; las cuentas y afiliaciones anteriores no se migran automáticamente.
 
+## Accesibilidad e idiomas
+
+El botón **Accesibilidad** permite cambiar entre español, inglés y chino simplificado, ajustar el tamaño del texto y leer el contenido o los botones enfocados en voz alta. Las preferencias se guardan en el navegador. La lectura utiliza las voces instaladas en el dispositivo; para oír un idioma, debe haber una voz compatible disponible en el sistema. Las traducciones están incluidas en `locales.js` y no envían texto de la página a un servicio externo.
+
 No abras `index.html` con doble clic (`file://`) para iniciar sesión: esa forma de abrirlo no puede acceder a `/api/*`. Este proyecto usa HTML y funciones API de Vercel, no Next.js Server Actions. Para desarrollo local puedes vincular el proyecto con `npx vercel link` y descargar sus variables con `npx vercel env pull .env.development.local`; el servidor local carga ese archivo automáticamente. También puedes copiar `.env.example` a `.env` y completar las variables manualmente. Después ejecuta `npm ci` y `npm run dev` desde la raíz del repositorio. Los archivos `.env*` están excluidos de Git. En producción, las funciones serverless conectan con Neon sin que tengas que mantener un servidor propio.
 
 Para evitar errores de conexión, revisa que `DATABASE_URL`, `SESSION_SECRET` (32+ caracteres) y `ADMIN_PASSWORD` (12+ caracteres) estén configuradas en Vercel y vuelve a desplegar.
