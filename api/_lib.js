@@ -25,7 +25,17 @@ async function ensureSchema() {
       email TEXT NOT NULL,
       password_hash TEXT NOT NULL,
       role TEXT NOT NULL DEFAULT 'cliente' CHECK (role IN ('admin', 'cliente')),
+      session_version INTEGER NOT NULL DEFAULT 0,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )`;
+    await query`ALTER TABLE accounts
+      ADD COLUMN IF NOT EXISTS session_version INTEGER NOT NULL DEFAULT 0`;
+    await query`CREATE TABLE IF NOT EXISTS password_reset_tokens (
+      dni VARCHAR(8) PRIMARY KEY REFERENCES accounts(dni) ON DELETE CASCADE,
+      token_hash TEXT NOT NULL UNIQUE,
+      expires_at TIMESTAMPTZ NOT NULL,
+      requested_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      used_at TIMESTAMPTZ
     )`;
     await query`CREATE TABLE IF NOT EXISTS policies (
       policy_number VARCHAR(8) NOT NULL,
@@ -85,6 +95,7 @@ async function bootstrapAdmin() {
         name = EXCLUDED.name,
         email = EXCLUDED.email,
         password_hash = EXCLUDED.password_hash,
+        session_version = accounts.session_version + 1,
         role = 'admin'`;
   })().catch((error) => {
     adminReady = null;
@@ -118,7 +129,7 @@ function sendError(res, status, message) {
 }
 
 function isConfigError(error) {
-  return /DATABASE_URL|SESSION_SECRET|ADMIN_PASSWORD/.test(error.message || "");
+  return /DATABASE_URL|SESSION_SECRET|ADMIN_PASSWORD|RESEND_API_KEY|EMAIL_FROM|APP_URL/.test(error.message || "");
 }
 
 function authCookie(token, req, maxAge) {
@@ -132,7 +143,7 @@ async function signSession(user) {
     throw new Error("Configura SESSION_SECRET con al menos 32 caracteres aleatorios.");
   }
   const { SignJWT } = await import("jose");
-  return new SignJWT({ role: user.role })
+  return new SignJWT({ role: user.role, sv: user.session_version ?? 0 })
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(user.dni)
     .setIssuedAt()
@@ -157,9 +168,11 @@ async function currentUser(req) {
     return null;
   }
   const query = database();
-  const rows = await query`SELECT dni, name, email, role, created_at
+  const rows = await query`SELECT dni, name, email, role, session_version, created_at
     FROM accounts WHERE dni = ${payload.sub}`;
-  return rows[0] || null;
+  if (!rows[0] || (payload.sv ?? 0) !== rows[0].session_version) return null;
+  const { session_version, ...user } = rows[0];
+  return user;
 }
 
 async function requireUser(req, res, roles) {

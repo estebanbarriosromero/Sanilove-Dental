@@ -34,9 +34,9 @@ module.exports = async function handler(req, res) {
     const query = database();
     const rows = await query`INSERT INTO accounts (dni, name, email, password_hash, role)
       VALUES (${dni}, ${name.trim()}, ${email.trim().toLowerCase()}, ${passwordHash}, 'cliente')
-      RETURNING dni, name, email, role`;
-    const user = rows[0];
-    const token = await signSession(user);
+      RETURNING dni, name, email, role, session_version`;
+    const { session_version, ...user } = rows[0];
+    const token = await signSession({ ...user, session_version });
     res.setHeader("Set-Cookie", authCookie(token, req, 60 * 60 * 24 * 7));
     return res.status(201).json({ user });
   } catch (error) {
