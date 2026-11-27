@@ -535,7 +535,12 @@ window.SANILOVE_TRANSLATIONS = [
   ["Buscar ciudad", "Search cities", "搜索城市"],
   ["Buscar ciudad…", "Search cities…", "搜索城市…"],
   ["Direcciones y horarios de ejemplo: confirma los datos reales de cada centro antes de publicar.", "Example addresses and hours: confirm each center’s details before publishing.", "地址和营业时间为示例：发布前请确认每个中心的实际信息。"],
-  ["Cierra sesión", "Sign out", "退出登录"]
+  ["Cierra sesión", "Sign out", "退出登录"],
+  ["Todas", "All", "全部"],
+  ["Ver foto", "View photo", "查看照片"],
+  ["Ampliar foto", "Enlarge photo", "放大照片"],
+  ["Ciudades", "Cities", "城市"],
+  ["Volver arriba", "Back to top", "返回顶部"]
 ].reduce((translations, [spanish, english, chinese]) => {
   translations[spanish] = { es: spanish, en: english, zh: chinese };
   return translations;
